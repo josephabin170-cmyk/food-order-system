@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, session
 from flask_mysqldb import MySQL
 from flask_bcrypt import Bcrypt
 import boto3
+import os
 
 app = Flask(__name__)
 
@@ -16,8 +17,6 @@ app.config['MYSQL_DB'] = 'foodapp'
 mysql = MySQL(app)
 s3 = boto3.client(
     's3',
-    aws_access_key_id='AKIARAT4CKC3KJDHUJ7I',
-    aws_secret_access_key='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'
 )
 
 bcrypt = Bcrypt(app)
@@ -293,4 +292,6 @@ def placeorder():
 
 
 if __name__ == '__main__':
-     app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
+    
